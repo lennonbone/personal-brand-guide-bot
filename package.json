@@ -1,0 +1,9 @@
+{
+  "name": "personal-brand-guide-bot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Stop the Starving Artist — Personal Brand Guide intake bot, powered by Claude.",
+  "engines": {
+    "node": ">=18"
+  }
+}
