@@ -109,6 +109,14 @@
   #guideDoc ul { padding-left: 20px; }
   #guideDoc strong { color: var(--charcoal); }
 
+  /* Keep blocks whole so the PDF never slices a line across a page break */
+  #guideDoc p, #guideDoc li, #guideDoc h1, #guideDoc h2, #guideDoc h3,
+  .doc-head, .doc-foot {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  #guideDoc h2, #guideDoc h3 { page-break-after: avoid; }
+
   @media (max-width: 600px) {
     .msg { max-width: 90%; }
     .doc-head, .doc-foot { padding-left: 22px; padding-right: 22px; margin-left: 0; margin-right: 0; }
@@ -331,7 +339,7 @@
       image: { type: "jpeg", quality: 0.98 },
       html2canvas: { scale: 2, useCORS: true },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-      pagebreak: { mode: ["css", "legacy"] },
+      pagebreak: { mode: ["avoid-all", "css", "legacy"] },
     }).from(document.getElementById("guideDoc")).save();
   };
 </script>

@@ -1,4 +1,4 @@
-# Personal Brand Guide Bot 
+# Personal Brand Guide Bot
 
 A guided chatbot that walks an artist through Lennon's **"Make Content That
 Attracts Buyers"** exercise (9 questions), then builds them a finished
