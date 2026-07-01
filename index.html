@@ -42,12 +42,14 @@
   }
   header .kicker { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); }
   header h1 { margin: 3px 0 0; font-size: 19px; font-weight: 600; font-family: "Playfair Display", serif; }
-  #startOver {
+  .hdr-btns { display: flex; gap: 8px; }
+  #backBtn, #startOver {
     background: transparent; border: 1px solid var(--line); color: var(--muted);
     border-radius: 999px; padding: 7px 14px; font-size: 12px; font-weight: 600; cursor: pointer;
     font-family: "Raleway", sans-serif;
   }
-  #startOver:hover { border-color: var(--terracotta); color: var(--terracotta); }
+  #backBtn:hover:not(:disabled), #startOver:hover { border-color: var(--terracotta); color: var(--terracotta); }
+  #backBtn:disabled { opacity: .4; cursor: not-allowed; }
 
   #chat { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 14px; }
 
@@ -131,7 +133,10 @@
       <div class="kicker">Stop the Starving Artist</div>
       <h1>Build Your Personal Brand Guide</h1>
     </div>
-    <button id="startOver" type="button">Start over</button>
+    <div class="hdr-btns">
+      <button id="backBtn" type="button" disabled>← Back</button>
+      <button id="startOver" type="button">Start over</button>
+    </div>
   </header>
 
   <div id="chat"></div>
@@ -171,10 +176,47 @@
   const sendBtn = document.getElementById("send");
   const guideView = document.getElementById("guideView");
   const guideBody = document.getElementById("guideBody");
+  const backBtn = document.getElementById("backBtn");
 
   let messages = [];
   let busy = false;
   let artistName = "Your";
+  let guideBuilt = false;
+
+  // The Back button is available during the interview once they're past Q1,
+  // and not while the bot is thinking or after the guide is built.
+  function updateControls() {
+    backBtn.disabled = busy || guideBuilt || messages.length < 4;
+  }
+
+  // Rebuild the visible chat from the messages array (used after Back).
+  function rebuildChat() {
+    chat.innerHTML = "";
+    for (let i = 1; i < messages.length; i++) {
+      const m = messages[i];
+      if (m.role === "user") {
+        if (m.content === "Please build my guide now.") continue; // hidden helper turn
+        addBubble(m.content, "user");
+      } else {
+        addBubble(m.content, "bot");
+      }
+    }
+  }
+
+  // Step back one question and let them re-answer it (their old answer is pre-filled).
+  function goBack() {
+    if (busy || guideBuilt || messages.length < 4) return;
+    messages.pop();                 // remove the current question
+    const prevAnswer = messages.pop(); // remove their last answer
+    rebuildChat();
+    if (prevAnswer && typeof prevAnswer.content === "string") {
+      input.value = prevAnswer.content;
+      input.style.height = "auto";
+      input.style.height = Math.min(input.scrollHeight, 140) + "px";
+    }
+    updateControls();
+    input.focus();
+  }
 
   const START_MARK = "<<<BRAND_GUIDE_START>>>";
   const END_MARK = "<<<BRAND_GUIDE_END>>>";
@@ -212,6 +254,7 @@
     busy = state;
     sendBtn.disabled = state;
     input.disabled = state;
+    updateControls();
   }
 
   async function callApi() {
@@ -241,6 +284,8 @@
     chat.appendChild(wrap);
     chat.scrollTop = chat.scrollHeight;
     guideView.style.display = "flex"; // pop it open automatically
+    guideBuilt = true;
+    updateControls();
   }
 
   // Core turn handler. Handles the building-message handoff and the guide.
@@ -303,6 +348,8 @@
     guideView.style.display = "none";
     guideBody.innerHTML = "";
     artistName = "Your";
+    guideBuilt = false;
+    updateControls();
     turn("Hi! I'm ready to start.", false);
   }
 
@@ -312,6 +359,8 @@
     if (busy) return;
     start();
   };
+
+  backBtn.onclick = goBack;
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();

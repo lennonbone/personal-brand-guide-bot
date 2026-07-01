@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Build Your Personal Brand Guide · Stop the Starving Artist</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,600;1,700;1,900&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* All styles scoped under #stsa-pbg so Kajabi's CSS can't override them
+     and these styles can't affect the rest of your Kajabi page. */
+  html,body{margin:0;}
+
+  #stsa-pbg{
+    --charcoal:#262626;
+    --cream-light:#F7F1E8;
+    --cream:#E7D5C1;
+    --sage:#8EB3AE;
+    --terracotta:#CD6D4F;
+    --yellow:#FCD48A;
+    --muted:#9a8f82;
+    --line:#e7d5c1;
+    background:var(--cream-light);
+    font-family:"Raleway",system-ui,sans-serif;
+    color:var(--charcoal);
+    line-height:1.6;
+    padding:56px 20px 64px;
+    box-sizing:border-box;
+  }
+  #stsa-pbg *{box-sizing:border-box;}
+  #stsa-pbg .pbg-inner{max-width:880px;margin:0 auto;}
+
+  #stsa-pbg .pbg-kicker{
+    text-align:center;
+    font-size:13px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--terracotta);
+    font-weight:700;
+    margin:0 0 18px;
+  }
+  #stsa-pbg .pbg-h1{
+    font-family:"Playfair Display",Georgia,serif;
+    font-weight:800;
+    font-size:clamp(2.1rem,5vw,3.1rem);
+    line-height:1.12;
+    text-align:center;
+    margin:0 auto 20px;
+    max-width:14ch;
+    color:var(--charcoal);
+  }
+  #stsa-pbg .pbg-h1 .pbg-accent{color:var(--terracotta);font-style:italic;font-weight:900;}
+  #stsa-pbg .pbg-sub{
+    text-align:center;
+    font-size:clamp(1rem,2.2vw,1.18rem);
+    color:#4a4642;
+    max-width:60ch;
+    margin:0 auto 14px;
+  }
+  #stsa-pbg .pbg-meta{
+    text-align:center;
+    font-size:14px;
+    color:var(--muted);
+    margin:0 0 34px;
+  }
+  #stsa-pbg .pbg-meta b{color:var(--charcoal);font-weight:700;}
+
+  #stsa-pbg .pbg-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:18px;
+    box-shadow:0 18px 50px rgba(38,38,38,.10);
+    overflow:hidden;
+  }
+  #stsa-pbg .pbg-card iframe{
+    display:block;
+    width:100%;
+    height:760px;
+    border:none;
+  }
+
+  #stsa-pbg .pbg-footer{
+    text-align:center;
+    margin:26px 0 0;
+    padding:0;
+    background:none;
+    font-size:11px;
+    line-height:1.4;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+
+  @media (max-width:600px){
+    #stsa-pbg{padding:36px 14px 48px;}
+    #stsa-pbg .pbg-card iframe{height:80vh;min-height:560px;}
+  }
+</style>
+</head>
+<body>
+  <!-- Paste everything from <div id="stsa-pbg"> ... </div> into a Kajabi Custom Code block,
+       and include the <link> and <style> above with it. -->
+  <div id="stsa-pbg">
+    <div class="pbg-inner">
+      <div class="pbg-kicker">Stop the Starving Artist</div>
+      <h1 class="pbg-h1">Build Your <span class="pbg-accent">Personal Brand Guide</span></h1>
+      <p class="pbg-sub">
+        Answer a handful of simple questions and walk away with a brand guide that's
+        truly yours... your mission, your message, and a month of post ideas built
+        straight from your own words and stories.
+      </p>
+      <p class="pbg-meta">Takes about <b>15 minutes</b> &nbsp;·&nbsp; Yours to download</p>
+
+      <div class="pbg-card">
+        <iframe
+          src="https://personal-brand-guide-bot.vercel.app"
+          title="Build Your Personal Brand Guide"
+          loading="lazy"></iframe>
+      </div>
+
+      <div class="pbg-footer">Stop the Starving Artist · Make Your Art More Valuable</div>
+    </div>
+  </div>
+</body>
+</html>

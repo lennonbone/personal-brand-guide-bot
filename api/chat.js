@@ -52,7 +52,15 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({
         model: MODEL,
         max_tokens: 4096,
-        system: SYSTEM_PROMPT,
+        // Prompt caching: the big instruction sheet is identical on every turn,
+        // so we cache it. Repeat reads are ~90% cheaper than re-sending it fresh.
+        system: [
+          {
+            type: "text",
+            text: SYSTEM_PROMPT,
+            cache_control: { type: "ephemeral" },
+          },
+        ],
         messages: messages,
       }),
     });
